@@ -1,4 +1,4 @@
-function Get-PatchInformation {
+function Get-KBInformation {
     <#
     .SYNOPSIS
         Get download links for KB articles.
@@ -12,7 +12,6 @@ function Get-PatchInformation {
     .OUTPUTS
         Output (if any)
     .NOTES
-        This code modified and based on http://stealthpuppy.com/powershell-download-import-updates-mdt/
     #>
 
     [cmdletbinding()]
@@ -88,6 +87,7 @@ function Get-PatchInformation {
             $KbInfoObject.Description 
         ) | Out-String | Write-Verbose
 
+        # The code below modified and based on http://stealthpuppy.com/powershell-download-import-updates-mdt/        
         $Post = @{ size = 0; updateID = $KbInfoObject.GUID; uidInfo = $KbInfoObject.GUID } | ConvertTo-Json -Compress
         $PostBody = @{ updateIDs = "[$Post]" } 
         $KbInfoObject.DownloadUrls += Invoke-WebRequest -Uri 'http://www.catalog.update.microsoft.com/DownloadDialog.aspx' -Method Post -Body $postBody |
